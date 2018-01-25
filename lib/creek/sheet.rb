@@ -101,7 +101,11 @@ module Creek
                 cell           = node.attributes['r']
               elsif (node.name.eql? 'v') and (node.node_type.eql? opener)
                 unless cell.nil?
-                  cells[cell] = convert(node.inner_xml, cell_type, cell_style_idx)
+                  cell_value = node.inner_xml
+                  cell_type = 's'
+                  cell_type = 'n' if cell_value.to_f.to_s == cell_value.to_s
+                  cell_type = 'i' if convert(cell_value, cell_type, cell_style_idx) == ' '
+                  cells[cell] = convert(cell_value, cell_type, cell_style_idx)
                 end
               elsif (node.name.eql? 't') and (node.node_type.eql? opener)
                 unless cell.nil?
